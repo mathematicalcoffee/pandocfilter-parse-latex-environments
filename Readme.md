@@ -8,6 +8,10 @@ So e.g. if you specify `columns`, anything between `\begin{columns}` and `\end{c
 
 So you could specify e.g. `columns`, `block` which would let you 
 
+* Panflute user guide: http://scorreia.com/software/panflute/guide.html#
+
+Considering panflute because it's easier for me to learn.
+
 ## The problem
 
 You love writing markdown in pandoc and then compiling it with LaTeX with latex or beamer. It's awesome. You don't have to remember to type `\emph{foobar}` but can instead type `*foobar*`. You've gotten used to writing lists the obvious way.

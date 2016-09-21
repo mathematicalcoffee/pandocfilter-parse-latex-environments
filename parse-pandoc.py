@@ -25,6 +25,7 @@ def parseRawLatexBlock(key, value, format, meta):
                 # the first/last are the begin/end environment (pretty sure that's how it works)
                 # @TODO add in the LaTeX \begin and \end too
                 # @UPTO here
+                # OK, I think if I want to parse m.group(2) I need to feed it through pandoc again :/
                 return RawBlock('latex', '\\begin{' + m.group(1) + '}' + m.group(2) + '\\end{' + m.group(1) + '}')
                 #return walk(m.group(2), parseRawLatexBlock, format, meta)
 
