@@ -12,6 +12,11 @@ So you could specify e.g. `columns`, `block` which would let you
 
 Considering panflute because it's easier for me to learn.
 
+~~~
+pandoc example.md -t beamer --filter ./parse-latexenv-panflute.py # i think using python2 not python3
+pandoc example.md -t json | ./parse-latexenv-panflute.py
+~~~
+
 ## The problem
 
 You love writing markdown in pandoc and then compiling it with LaTeX with latex or beamer. It's awesome. You don't have to remember to type `\emph{foobar}` but can instead type `*foobar*`. You've gotten used to writing lists the obvious way.
