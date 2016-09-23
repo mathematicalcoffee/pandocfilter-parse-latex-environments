@@ -17,7 +17,11 @@ TO_CONVERT = ['columns', 'block']
 # the first/last are the begin/end environment (pretty sure that's how it works)
 # Also want regex to gobble any [] and {} after the begin.
 # Need to check valid syntax.
+# make sure the dot in the {} is not DOTALL...
+# why don't I just do [a-zA-Z]*\*? for the environment name
+# I can't handle balanced braces and so on, but it's a simple filter anyway.
 pattern = re.compile(r"""\A\\begin\{(.*)\}(.*)\\end\{\1\}\Z""", re.DOTALL)
+pattern = re.compile(r"""\A\\begin\{([a-zA-Z]+\*?)\}(\[.*\])?(\{.*\})?([\s\S]*)\\end\{\1\}\Z""")
 
 
 def parseRawLatexBlock(elem, doc):
@@ -26,7 +30,8 @@ def parseRawLatexBlock(elem, doc):
         m = pattern.match(contents)
         if m and m.group(1) in TO_CONVERT:
             env = '{' + m.group(1) + '}'
-            #sys.stderr.write('Parsing contents of ' + env + '\n')
+            # sys.stderr.write('Parsing contents of ' + env + '\n')
+            startstr = '\\begin' + env + (m.group(2) or '') + (m.group(3) or '')
 
             # Ideally we will run pandoc with all the filters that were invoked
             # originally. But panflute does not know that.
@@ -36,8 +41,8 @@ def parseRawLatexBlock(elem, doc):
             #  (say) LaTeX then we won't.
 
             #  I need to apply pandoc to the contents with this filter.
-            return ([pf.RawBlock(text='\\begin' + env, format='latex')] +
-                    pf.convert_text(m.group(2), extra_args=['--filter={}'.format(os.path.realpath(__file__))]) +
+            return ([pf.RawBlock(text=startstr, format='latex')] +
+                    pf.convert_text(m.group(4), extra_args=['--filter={}'.format(os.path.realpath(__file__))]) +
                     [pf.RawBlock(text='\\end' + env, format='latex')])
 
              # This is OK, *but* any arguments to the begin{} are dropped.

@@ -1,6 +1,6 @@
 # Parse content within LaTeX environments with Pandoc
 
-**Status:** sort of working (panflute version). But arguments after the `\begin{}` do not get included into the latex as they should. I need to write a regex that is moderately in line with LaTeX's rules (need to look up).
+**Status:** sort of working (panflute version). But it is mixing up the last `\end{block}` and `\end{columns}` in the example. Unsure if it's a pandoc thing or a regex thing. Need to check.
 
 TLDR: you specify particular LaTeX environments, and pandoc will parse the contents of those environments (recursively).
 
