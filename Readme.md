@@ -1,20 +1,20 @@
 # Parse content within LaTeX environments with Pandoc
 
-**Status:** not working. Just a dream right now.
+**Status:** sort of working (panflute version). But arguments after the `\begin{}` do not get included into the latex as they should. I need to write a regex that is moderately in line with LaTeX's rules (need to look up).
 
 TLDR: you specify particular LaTeX environments, and pandoc will parse the contents of those environments (recursively).
 
 So e.g. if you specify `columns`, anything between `\begin{columns}` and `\end{columns}` will be parsed by pandoc again. The usual pandoc rules will apply from there downwards, so if you have e.g. content in `\begin{block}` and `\end{block}` within your `columns` environment, it will not be parsed as per the usual `raw_latex` pandoc extension.
 
-So you could specify e.g. `columns`, `block` which would let you 
-
-* Panflute user guide: http://scorreia.com/software/panflute/guide.html#
+So you could specify e.g. `columns`, `block` which would let you parse the contents of columns, of blocks, and of these things nested in each other (but not of other environments).
 
 Considering panflute because it's easier for me to learn.
 
+* Panflute user guide: http://scorreia.com/software/panflute/guide.html
+
 ~~~
 pandoc example.md -t beamer --filter ./parse-latexenv-panflute.py # i think using python2 not python3
-pandoc example.md -t json | ./parse-latexenv-panflute.py
+pandoc example.md -t json | ./parse-latexenv-panflute.py | -t beamer
 ~~~
 
 ## The problem
